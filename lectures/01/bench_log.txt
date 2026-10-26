@@ -1,0 +1,28 @@
+{'model': 'gemini-3.5-flash-lite', 'question': 'general', 'run': 1, 'seconds': 2.097, 'input_tokens': 15, 'output_tokens': 95, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 206, 'error': ''}
+{'model': 'gemini-3.5-flash-lite', 'question': 'general', 'run': 2, 'seconds': 1.854, 'input_tokens': 15, 'output_tokens': 97, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 207, 'error': ''}
+{'model': 'gemini-3.5-flash-lite', 'question': 'general', 'run': 3, 'seconds': 0.91, 'input_tokens': 15, 'output_tokens': 91, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 190, 'error': ''}
+{'model': 'gemini-3.5-flash-lite', 'question': 'course', 'run': 1, 'seconds': 4.283, 'input_tokens': 21, 'output_tokens': 445, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 846, 'error': ''}
+{'model': 'gemini-3.5-flash-lite', 'question': 'course', 'run': 2, 'seconds': 1.997, 'input_tokens': 21, 'output_tokens': 375, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 682, 'error': ''}
+{'model': 'gemini-3.5-flash-lite', 'question': 'course', 'run': 3, 'seconds': 3.85, 'input_tokens': 21, 'output_tokens': 485, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 932, 'error': ''}
+{'model': 'gemini-3.5-flash', 'question': 'general', 'run': 1, 'seconds': 9.946, 'input_tokens': 15, 'output_tokens': 91, 'thinking_tokens': 678, 'retries_429': 0, 'waited_s': 0.0, 'chars': 193, 'error': ''}
+{'model': 'gemini-3.5-flash', 'question': 'general', 'run': 2, 'seconds': 5.508, 'input_tokens': 15, 'output_tokens': 86, 'thinking_tokens': 643, 'retries_429': 0, 'waited_s': 0.0, 'chars': 181, 'error': ''}
+{'model': 'gemini-3.5-flash', 'question': 'general', 'run': 3, 'seconds': 3.957, 'input_tokens': 15, 'output_tokens': 82, 'thinking_tokens': 560, 'retries_429': 0, 'waited_s': 0.0, 'chars': 177, 'error': ''}
+{'model': 'gemini-3.5-flash', 'question': 'course', 'run': 1, 'seconds': 12.488, 'input_tokens': 21, 'output_tokens': 597, 'thinking_tokens': 1089, 'retries_429': 0, 'waited_s': 0.0, 'chars': 1117, 'error': ''}
+{'model': 'gemini-3.5-flash', 'question': 'course', 'run': 2, 'seconds': 11.581, 'input_tokens': 21, 'output_tokens': 577, 'thinking_tokens': 1111, 'retries_429': 0, 'waited_s': 0.0, 'chars': 1104, 'error': ''}
+{'model': 'gemini-3.5-flash', 'question': 'course', 'run': 3, 'seconds': 12.741, 'input_tokens': 21, 'output_tokens': 610, 'thinking_tokens': 1144, 'retries_429': 0, 'waited_s': 0.0, 'chars': 1141, 'error': ''}
+{'model': 'gemini-3.1-flash-lite', 'question': 'general', 'run': 1, 'seconds': 1.897, 'input_tokens': 15, 'output_tokens': 91, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 205, 'error': ''}
+{'model': 'gemini-3.1-flash-lite', 'question': 'general', 'run': 2, 'seconds': 2.13, 'input_tokens': 15, 'output_tokens': 82, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 178, 'error': ''}
+{'model': 'gemini-3.1-flash-lite', 'question': 'general', 'run': 3, 'seconds': 20.421, 'input_tokens': 15, 'output_tokens': 106, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 214, 'error': ''}
+{'model': 'gemini-3.1-flash-lite', 'question': 'course', 'run': 1, 'seconds': 5.273, 'input_tokens': 21, 'output_tokens': 658, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 1215, 'error': ''}
+{'model': 'gemini-3.1-flash-lite', 'question': 'course', 'run': 2, 'seconds': 9.151, 'input_tokens': 21, 'output_tokens': 637, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 1236, 'error': ''}
+{'model': 'gemini-3.1-flash-lite', 'question': 'course', 'run': 3, 'seconds': 2.784, 'input_tokens': 21, 'output_tokens': 711, 'thinking_tokens': None, 'retries_429': 0, 'waited_s': 0.0, 'chars': 1354, 'error': ''}
+| model | question | n | 応答時間 中央値[s] | 入力 | 出力 | 思考 | 429 |
+|---|---|---|---|---|---|---|---|
+| gemini-3.1-flash-lite | course | 3 | 5.273 | 21 | 658 | - | 0 |
+| gemini-3.1-flash-lite | general | 3 | 2.13 | 15 | 91 | - | 0 |
+| gemini-3.5-flash | course | 3 | 12.488 | 21 | 597 | 1111 | 0 |
+| gemini-3.5-flash | general | 3 | 5.508 | 15 | 86 | 643 | 0 |
+| gemini-3.5-flash-lite | course | 3 | 3.85 | 21 | 445 | - | 0 |
+| gemini-3.5-flash-lite | general | 3 | 1.854 | 15 | 95 | - | 0 |
+
+-> lectures/01/bench.csv

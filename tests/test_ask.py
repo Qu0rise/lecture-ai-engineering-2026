@@ -58,3 +58,24 @@ def test_usage_line_handles_missing_metadata():
     assert ask.usage_line(SimpleNamespace(usage_metadata=None)) == "[tokens] 入力 - / 出力 -"
     r = SimpleNamespace(usage_metadata=SimpleNamespace(prompt_token_count=12, candidates_token_count=34))
     assert ask.usage_line(r) == "[tokens] 入力 12 / 出力 34"
+
+def test_bench_retries_on_429_and_summarizes():
+    from google.genai import errors
+
+    from app import bench
+
+    class M:
+        def __init__(self):
+            self.n = 0
+
+        def generate_content(self, model, contents):
+            self.n += 1
+            if self.n == 1:
+                raise errors.APIError(429, {"error": {"message": "rate"}})
+            return SimpleNamespace(text="ok", usage_metadata=SimpleNamespace(prompt_token_count=7, candidates_token_count=3, thoughts_token_count=None))
+
+    ticks = iter([0.0, 0.0, 1.5])
+    r = bench.measure(SimpleNamespace(models=M()), "m", "q", wait_s=0, clock=lambda: next(ticks), sleep=lambda s: None)
+    assert r["retries_429"] == 1 and r["seconds"] == 1.5 and r["input_tokens"] == 7 and r["error"] == ""
+    table = bench.summarize([dict(model="m", question="q", run=1, **r)])
+    assert table[2].startswith("| m | q | 1 | 1.5 | 7 | 3 |")

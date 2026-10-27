@@ -1,0 +1,87 @@
+{
+  "notebook": "lectures/02/glossary_sft.ipynb",
+  "config": {
+    "base_model": "Qwen/Qwen3.5-0.8B",
+    "revision": "2fc06364715b967f1860aea9cf38778875588b17",
+    "seed": 42,
+    "num_train_epochs": 5,
+    "warmup_steps": 6,
+    "lr": 0.0002,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "max_seq_len": 512,
+    "max_new_tokens": 160,
+    "gen_batch": 8,
+    "pass_ratio": 0.667
+  },
+  "versions": {
+    "transformers": "5.18.0",
+    "peft": "0.21.1",
+    "trl": "1.14.2",
+    "torch": "2.11.0+cu130"
+  },
+  "gpu": "Tesla T4 (Colab)",
+  "data": {
+    "train_examples": 233,
+    "breakdown": "58 terms x 2 templates + 97 alias questions + 10 non-glossary words x 2",
+    "eval": {
+      "seen": 12,
+      "paraphrase": 12,
+      "reverse": 6,
+      "unknown": 8
+    },
+    "general": 5
+  },
+  "retrieval_hit": {
+    "seen": "12/12",
+    "paraphrase": "11/12",
+    "reverse": "0/6",
+    "unknown": "7/8"
+  },
+  "train": {
+    "seconds": 598,
+    "steps": 150,
+    "loss_first": 2.355,
+    "loss_last": 0.066
+  },
+  "results": {
+    "base": {
+      "seen": "0/12",
+      "paraphrase": "3/12",
+      "reverse": "2/6",
+      "unknown": "3/8",
+      "over_refusal": "9/30",
+      "seconds": 71.6
+    },
+    "base+search": {
+      "seen": "12/12",
+      "paraphrase": "10/12",
+      "reverse": "1/6",
+      "unknown": "5/8",
+      "over_refusal": "4/30",
+      "seconds": 42.0
+    },
+    "lora": {
+      "seen": "12/12",
+      "paraphrase": "9/12",
+      "reverse": "1/6",
+      "unknown": "0/8",
+      "over_refusal": "2/30",
+      "seconds": 29.9
+    },
+    "lora+search": {
+      "seen": "11/12",
+      "paraphrase": "8/12",
+      "reverse": "2/6",
+      "unknown": "0/8",
+      "over_refusal": "1/30",
+      "seconds": 37.8
+    }
+  },
+  "general": {
+    "base": "5/5",
+    "lora": "4/5"
+  },
+  "scoring_note": "first pass missed refusals phrased as '用語集に載っていない'; the same outputs were re-scored with the extended REFUSAL list (base: unknown 2/8 -> 3/8, over_refusal 4/30 -> 9/30; base+search: unknown 4/8 -> 5/8). No regeneration.",
+  "executed_training_myself": true
+}

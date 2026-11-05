@@ -46,3 +46,41 @@ def test_default_question_of_lecture1_is_answerable_from_glossary():
     assert "3レベル" in DEFAULT_QUESTION
     hits = json.loads(tools.search_glossary("3レベル"))
     assert hits[0]["term"] == "宿題の3レベル"
+
+
+# ---- 第3回 演習: make_quiz ----
+
+
+def test_make_quiz_returns_question_and_answer_from_the_lecture():
+    quiz = json.loads(tools.make_quiz(2))
+    assert set(quiz) == {"question", "answer"}
+    term = quiz["question"].removeprefix("「").removesuffix("」の意味は？")
+    entry = next(t for t in tools.load_glossary() if t["term"] == term)
+    assert entry["lecture"] == 2
+    assert quiz["answer"] == entry["definition"]
+
+
+def test_make_quiz_reports_missing_lecture():
+    for lecture in (0, 99):
+        message = tools.make_quiz(lecture)
+        assert "ありません" in message and "出題できる回" in message
+
+
+# ---- 第3回 宿題（実装）: save_learning_log ----
+
+
+def test_save_learning_log_writes_markdown(tmp_path, monkeypatch):
+    monkeypatch.setattr(tools, "LOG_DIR", tmp_path / "learning_log")
+    message = tools.save_learning_log("第3回 気づき", "エージェント＝モデル＋ループ＋ツール")
+    files = list((tmp_path / "learning_log").glob("*.md"))
+    assert len(files) == 1 and files[0].name.endswith("_第3回_気づき.md")
+    assert files[0].read_text(encoding="utf-8") == "# 第3回 気づき\n\nエージェント＝モデル＋ループ＋ツール\n"
+    assert "保存しました" in message
+
+
+def test_save_learning_log_sanitizes_title_and_rejects_empty_content(tmp_path, monkeypatch):
+    monkeypatch.setattr(tools, "LOG_DIR", tmp_path)
+    tools.save_learning_log("../../etc/passwd", "x")
+    assert [p.parent for p in tmp_path.glob("*.md")] == [tmp_path]
+    assert "空です" in tools.save_learning_log("title", "   ")
+    assert len(list(tmp_path.glob("*.md"))) == 1

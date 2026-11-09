@@ -5,11 +5,16 @@
 """
 
 import json
+import random
+import re
+from datetime import datetime
 from functools import cache
 from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 MAX_RESULTS = 3
+# 第3回 宿題（実装）: 学習の記録の保存先。テストでは一時フォルダに差し替える
+LOG_DIR = Path(__file__).resolve().parent.parent / "learning_log"
 
 
 @cache
@@ -77,3 +82,49 @@ def get_lecture_summary(lecture: int) -> str:
         available = sorted(p.stem for p in (DATA_DIR / "lectures").glob("*.md"))
         return f"第{lecture}回の要点はまだありません。用意されている回: {', '.join(available)}"
     return path.read_text(encoding="utf-8")
+
+
+def make_quiz(lecture: int) -> str:
+    """指定した回（1始まりの整数）の用語から1つを選び、確認問題と答えを返す。
+
+    「第2回の確認問題を出して」「復習用に1問出して」のように、
+    ある回の復習問題を求められたときに使う。問題と答えが
+    {"question": "...", "answer": "..."} の JSON で返るので、
+    それをもとに出題し、答えは利用者が考えたあとに示す。
+    """
+    candidates = [e for e in load_glossary() if e["lecture"] == lecture]
+    if not candidates:
+        available = sorted({e["lecture"] for e in load_glossary()})
+        return (
+            f"第{lecture}回の用語は用語集にありません。"
+            f"出題できる回: {', '.join(str(n) for n in available)}"
+        )
+    entry = random.choice(candidates)
+    return json.dumps(
+        {"question": f"「{entry['term']}」の意味は？", "answer": entry["definition"]},
+        ensure_ascii=False,
+    )
+
+
+def _safe_filename(title: str) -> str:
+    """ファイル名に使えない文字を取り除く（パスの区切りや先頭のドットも許さない）。"""
+    name = re.sub(r'[\\/:*?"<>|\s]+', "_", title.strip()).strip("._")
+    return name[:50] or "memo"
+
+
+def save_learning_log(title: str, content: str) -> str:
+    """学習の記録（気づき・疑問・要点）を learning_log/ フォルダに Markdown で保存する。
+
+    「今日の学びを記録して」「このやり取りをメモに残して」のように、
+    利用者が内容の保存を頼んだときにだけ使う。title は短い見出し、
+    content は保存する本文（Markdown 可）。保存は取り消しにくい操作なので、
+    このツールは実行前に利用者の承認を待つ。保存したファイルのパスを返す。
+    """
+    if not content.strip():
+        return "保存する内容が空です。記録したい本文を content に入れてください。"
+    LOG_DIR.mkdir(parents=True, exist_ok=True)
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    path = LOG_DIR / f"{stamp}_{_safe_filename(title)}.md"
+    body = f"# {title.strip() or '学習の記録'}\n\n{content.strip()}\n"
+    path.write_text(body, encoding="utf-8")
+    return f"保存しました: {path.relative_to(LOG_DIR.parent)}（{len(body)} 文字）"

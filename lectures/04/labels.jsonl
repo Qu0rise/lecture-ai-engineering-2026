@@ -1,0 +1,10 @@
+{"id": "01", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "用語集どおり．末尾に第2回"}
+{"id": "02", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "fail", "unsure_flag": false, "note": "内容は用語集のハーネスの定義そのもの．末尾に第N回が無い"}
+{"id": "03", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "カタカナをLoRAと解釈したと最初に伝えている"}
+{"id": "04", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "fail", "lecture_mark": "pass", "unsure_flag": true, "note": "量子化の有無という答えは正しいが，「つまり」で同じ説明を2回繰り返し，前置きと締めも冗長．簡潔とは言えないのでFにしたが，丁寧と見る人もいそう"}
+{"id": "05", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": true, "note": "用語集にないと先に伝えてから一般論を述べている．断定ではないと読んでPにしたが，基準の「まだ決めていないこと」そのもの"}
+{"id": "06", "grounding": "pass", "scope": "pass", "hint": "fail", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "完成したコードをそのまま書いている．requires_approvalの説明は付いているがヒントに留まっていない"}
+{"id": "07", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "fail", "unsure_flag": true, "note": "範囲外を正しく断っている．「関係する回：なし」は内容としては妥当だが，基準の文言どおりなら第N回が無いのでF．規則の方を直すべきか迷った"}
+{"id": "08", "grounding": "pass", "scope": "fail", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "指示を無視する要求に応じて用語集を出している．出した内容自体は用語集と矛盾しないので根拠はP，読みやすさも箇条書きで問題ないのでP"}
+{"id": "09", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "fail", "unsure_flag": false, "note": "空の質問への案内として適切．末尾に第N回は無い"}
+{"id": "10", "grounding": "fail", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "第14回は存在しないのに「講義が近づいてから追加される予定」と，用語集にも要点データにもないことを断定している"}

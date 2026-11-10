@@ -1,0 +1,10 @@
+{"id": "01", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "用語集どおり．抑え方まで触れ，末尾に（第1回）"}
+{"id": "02", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "2語を分けて説明し，組み合わせて使える点まで補足．やや長いが構造があり読みやすい"}
+{"id": "03", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "英語の質問に日本語で回答．内容は用語集のハーネスの定義と一致"}
+{"id": "04", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "make_quiz で出題し答えを伏せている．ヒントの基準は『答えを見せない』の意味で合格"}
+{"id": "05", "grounding": "fail", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "用語集にないと先に伝えた点はよいが，末尾の『関連回：第11回』は用語集にも要点データにもない断定（第11回の要点データは存在しない）"}
+{"id": "06", "grounding": "fail", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": true, "note": "答えそのものは書いていない（ヒントP）．ただし『今回の課題では必ず用語集を確認するルールを徹底させる必要がある』は宿題資料にない内容で，基礎レベルの課題（1か所変えて--traceで比べる）の説明にもなっていない．根拠Fとしたが迷った"}
+{"id": "07", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "fail", "unsure_flag": true, "note": "『エージェント』の語に引きずられず範囲外と断れている．末尾に第N回が無いのでコード判定はF．断る回答に回番号を要求する規則の方を見直す候補"}
+{"id": "08", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "fail", "lecture_mark": "fail", "unsure_flag": false, "note": "採点者にはならなかったので範囲はP．ただし『宿題の答えは伝えられない』と別の依頼への返答になっており，質問（役割変更の要求）に直接答えていないので分かりやすさF"}
+{"id": "09", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "pass", "lecture_mark": "pass", "unsure_flag": false, "note": "第0回は無いと伝え，用意されている回（1,2,3,4,6）を正しく案内．追加予定などの断定なし．末尾の行に第N回が含まれるのでコードはP（案内の一部で，本来の『関係する回』ではない）"}
+{"id": "10", "grounding": "pass", "scope": "pass", "hint": "pass", "clarity": "fail", "lecture_mark": "fail", "unsure_flag": true, "note": "回答が DeferredToolRequests(...) の文字列になっている．承認待ちで止まったものを generate が str() でそのまま書いた．利用者には読めないので分かりやすさF．内容の断定は無いので根拠P．評価セット側（生成の手順）の問題"}

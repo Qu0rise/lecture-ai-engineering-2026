@@ -17,7 +17,7 @@ import sqlite_vec
 from app.config import (
     EMBEDDING_DIMENSIONS, EMBEDDING_MAX_TOKENS, EMBEDDING_MODEL,
     RAG_DB, RAG_DOCUMENT_IDS, RAG_SOURCE, RAG_TOP_K, RAG_TREE, get_api_key,
-    RAG_GRAPH, GRAPH_START_K, GRAPH_HOPS, GRAPH_MAX_RESULTS,
+    RAG_GRAPH, GRAPH_START_K, GRAPH_HOPS, GRAPH_MAX_RESULTS, RAG_NEIGHBORS,
 )
 
 
@@ -124,6 +124,45 @@ def open_index(path: Path):
         db.close()
 
 
+def expand_neighbors(hits: list[dict], radius: int = RAG_NEIGHBORS) -> list[dict]:
+    """検索で当たった各ページに、同じ資料の前後 radius ページの本文と引用情報を付けて返す。
+
+    当たったページは順位の順に並べ、その直後に前後のページを置く。同じページは1回しか返さない。
+    当たったページには role="hit"、足したページには role="prev"/"next" と、どの当たりから足したか（from）を入れる。
+    radius が 0 のときは何も足さない。
+    """
+    if radius <= 0 or not hits:
+        return hits
+    by_document = defaultdict(list)
+    for page in load_pages(RAG_SOURCE):
+        by_document[page["document_id"]].append(page)
+    for pages in by_document.values():
+        pages.sort(key=lambda page: page["page"])
+    position = {page["page_id"]: (document_id, i)
+                for document_id, pages in by_document.items() for i, page in enumerate(pages)}
+    hit_ids = {hit["page_id"] for hit in hits}
+    seen, results = set(), []
+    for hit in hits:
+        if hit["page_id"] not in position:
+            if hit["page_id"] not in seen:
+                seen.add(hit["page_id"])
+                results.append({**hit, "role": "hit"})
+            continue
+        document_id, center = position[hit["page_id"]]
+        pages = by_document[document_id]
+        for i in range(max(0, center - radius), min(len(pages), center + radius + 1)):
+            page = pages[i]
+            if page["page_id"] in seen:
+                continue
+            seen.add(page["page_id"])
+            if i == center:
+                results.append({**hit, "role": "hit"})
+            else:
+                results.append({**page, "distance": None, "role": "hit" if page["page_id"] in hit_ids else ("prev" if i < center else "next"),
+                                "from": hit["page_id"]})
+    return results
+
+
 def search(query: str) -> list[dict]:
     """質問を埋め込み、近いページを最大RAG_TOP_K件返す。"""
     if not isinstance(query, str) or not query.strip():
@@ -135,7 +174,7 @@ def search(query: str) -> list[dict]:
                    vec_distance_cosine(embedding, ?) AS distance
             FROM chunks ORDER BY distance, page_id LIMIT ?
         """, (sqlite_vec.serialize_float32(vector), RAG_TOP_K))
-        return [dict(row) for row in rows]
+        return expand_neighbors([dict(row) for row in rows])
 
 
 def search_graph(query: str) -> dict:
@@ -208,4 +247,6 @@ if __name__ == "__main__":
         print(f"章: {result['section']}")
         print(f"タイトル: {result['title']}")
         print(f"ページ: {result['page']}")
+        if result.get("role") and result["role"] != "hit":
+            print(f"役割: {result['role']}（{result['from']} の前後ページとして追加）")
         print(f"\n{result['content']}")
